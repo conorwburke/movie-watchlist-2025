@@ -55,10 +55,20 @@ form {
     padding: 5px 30px;
     border: solid 1px #cccccc;
     border-radius: 4px;
+    cursor: pointer;
 }
 
 .initial-display {
     display: flex;
     justify-content: center;
     padding: 200px 0px;
+}
+
+.movie-result {
+    display: flex;
+    flex-direction: row;
+}
+
+.movie-result img {
+    height: 100px;
 }
