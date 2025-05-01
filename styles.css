@@ -2,6 +2,11 @@ html, body {
     padding: 0;
 }
 
+h2, p {
+    margin: 0;
+    padding: 0;
+}
+
 body {
     max-width: 550px;
     margin: 0 auto;
@@ -64,11 +69,31 @@ form {
     padding: 200px 0px;
 }
 
+.results-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
 .movie-result {
     display: flex;
     flex-direction: row;
 }
 
-.movie-result img {
-    height: 100px;
+.poster {
+    height: 200px;
+    width: 150px;
+    padding-bottom: 30px;
+}
+
+.movie-title {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.movie-runtime {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
 }
