@@ -28,11 +28,8 @@ async function getData() {
     }
     const data = await response.json()
     searchResults = data
-    // console.log(searchResults)
     await getMovieDetails()
-    // console.log(movieDetailsData)
     getSearchResultsHtml()
-    // console.log(searchResultsHtml)
     renderSearchResults()
     } catch (error) {
     console.error(error.message)
@@ -43,7 +40,7 @@ async function getMovieDetails(){
     await Promise.all(searchResults.Search.map(async function(result){
       const response = await fetch(`https://omdbapi.com/?apikey=ca546780&i=${result.imdbID}`)
       const data = await response.json()
-      movieDetailsData.push(await data) 
+      movieDetailsData.push(data) 
     }))
     return movieDetailsData
 }
@@ -55,17 +52,20 @@ function getSearchResultsHtml() {
             <div class="movie-result">
                 <img class="poster" src="${movie.Poster}" />
                 <div class="movie-title">
-                    <h2>${movie.Title}</h2>
-                    <p>⭐️ ${movie.imdbRating}</p>
+                    <div class="title-rating">
+                        <h2>${movie.Title}</h2>
+                        <p>⭐️ ${movie.imdbRating}</p>
+                    </div>
                     <div class="movie-runtime">
                         <p>${movie.Runtime}</p>
                         <p>${movie.Genre}</p>
-                        <button class="add-watch-btn">+ Watchlist</button>
+                        <button class="add-watch-btn" id="${movie.imdbID}">+ Watchlist</button>
                     </div>
-                    <p>${movie.Plot}</p
+                    <p class="plot">${movie.Plot}</p
                 </div>
             </div>
         </div>
+        <hr />
         `
     })
     return searchResultsHtml
