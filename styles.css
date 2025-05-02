@@ -75,14 +75,16 @@ form {
 
 .results-container {
     display: flex;
-    flex-direction: row;
-    gap: 20px;
-    margin: 20px 40px;
+    flex-direction: column;
+    gap: 10px;
+
 }
 
 .movie-result {
     display: flex;
     flex-direction: row;
+    margin: 20px 40px;
+    gap: 20px;
 }
 
 .poster {
@@ -99,7 +101,6 @@ form {
     display: flex;
     flex-direction: row;
     gap: 10px;
-
 }
 
 .title-rating p {

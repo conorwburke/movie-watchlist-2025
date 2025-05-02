@@ -2,15 +2,18 @@ const form = document.getElementById('search')
 const searchBtn = document.getElementById('search-btn')
 const searchBarVal = document.getElementById('search-bar')
 const searchResultsEl = document.getElementById('search-results')
+
 let searchText = ''
 let searchResults
 let movieDetailsData = []
 let searchResultsHtml = ''
+let moviesToWatchArr = []
 
 form.addEventListener('submit', function(event){
     event.preventDefault()
 })
 
+//To handle clicks on Search button and populate search results, also clears variables in anticipation of subsequent searches
 searchBtn.addEventListener('click', function() {
     searchText = searchBarVal.value
     searchBarVal.value = ''
@@ -18,7 +21,20 @@ searchBtn.addEventListener('click', function() {
     searchResultsHtml = ''
     getData()
 })
-    
+
+//To handle clicks on '+ Watchlist' buttons, push imdbID to array, and save to localStorage ***
+document.addEventListener('click', function(event){
+    if (event.target.dataset.add){
+        if(!moviesToWatchArr.includes(event.target.dataset.add)){
+            moviesToWatchArr.push(event.target.dataset.add)
+            console.log(moviesToWatchArr)
+        } else {
+            console.log('Already added!')
+        }
+    }
+}) 
+
+//To get initial search data from OMDB API; also triggers subsequent functions
 async function getData() {
     const url = `https://omdbapi.com/?apikey=ca546780&s=${searchText}&type=movie`
     try {
@@ -36,6 +52,7 @@ async function getData() {
     }
 }
 
+//Because the search query call to OMDB API triggered by getData() does not return complete data on individual titles, this iterates over the base data returned and runs a series of API imdbID query calls for each individual movie, then pushes the complete data objects into the movieDetailsData array
 async function getMovieDetails(){
     await Promise.all(searchResults.Search.map(async function(result){
       const response = await fetch(`https://omdbapi.com/?apikey=ca546780&i=${result.imdbID}`)
@@ -45,10 +62,11 @@ async function getMovieDetails(){
     return movieDetailsData
 }
 
+//This function generates an html blocks for each movie object pushed by getMovieDetails() into the movieDetailsData array
 function getSearchResultsHtml() {
     movieDetailsData.map(function(movie){
         searchResultsHtml += `
-        <div class="results-container"
+        <div class="results-container">
             <div class="movie-result">
                 <img class="poster" src="${movie.Poster}" />
                 <div class="movie-title">
@@ -59,7 +77,7 @@ function getSearchResultsHtml() {
                     <div class="movie-runtime">
                         <p>${movie.Runtime}</p>
                         <p>${movie.Genre}</p>
-                        <button class="add-watch-btn" id="${movie.imdbID}">+ Watchlist</button>
+                        <button class="add-watch-btn" data-add="${movie.imdbID}">+ Watchlist</button>
                     </div>
                     <p class="plot">${movie.Plot}</p
                 </div>
@@ -71,49 +89,7 @@ function getSearchResultsHtml() {
     return searchResultsHtml
 }
 
+//This function simply renders the searchResultsHtml into the proper element
 function renderSearchResults() {
   searchResultsEl.innerHTML = searchResultsHtml
 }
-
-
-
-// {
-//     "Title": "Blade Runner",
-//     "Year": "1982",
-//     "Rated": "R",
-//     "Released": "25 Jun 1982",
-//     "Runtime": "117 min",
-//     "Genre": "Action, Drama, Sci-Fi",
-//     "Director": "Ridley Scott",
-//     "Writer": "Hampton Fancher, David Webb Peoples, Philip K. Dick",
-//     "Actors": "Harrison Ford, Rutger Hauer, Sean Young",
-//     "Plot": "A blade runner must pursue and terminate four replicants who stole a ship in space and have returned to Earth to find their creator.",
-//     "Language": "English, German, Cantonese, Japanese, Hungarian, Arabic, Korean",
-//     "Country": "United States, United Kingdom",
-//     "Awards": "Nominated for 2 Oscars. 13 wins & 22 nominations total",
-//     "Poster": "https://m.media-amazon.com/images/M/MV5BOWQ4YTBmNTQtMDYxMC00NGFjLTkwOGQtNzdhNmY1Nzc1MzUxXkEyXkFqcGc@._V1_SX300.jpg",
-//     "Ratings": [
-//       {
-//         "Source": "Internet Movie Database",
-//         "Value": "8.1/10"
-//       },
-//       {
-//         "Source": "Rotten Tomatoes",
-//         "Value": "89%"
-//       },
-//       {
-//         "Source": "Metacritic",
-//         "Value": "84/100"
-//       }
-//     ],
-//     "Metascore": "84",
-//     "imdbRating": "8.1",
-//     "imdbVotes": "842,743",
-//     "imdbID": "tt0083658",
-//     "Type": "movie",
-//     "DVD": "N/A",
-//     "BoxOffice": "$32,914,489",
-//     "Production": "N/A",
-//     "Website": "N/A",
-//     "Response": "True"
-//   }
