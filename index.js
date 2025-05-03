@@ -22,11 +22,12 @@ searchBtn.addEventListener('click', function() {
     getData()
 })
 
-//To handle clicks on '+ Watchlist' buttons, push imdbID to array, and save to localStorage ***
+//To handle clicks on '+ Watchlist' buttons, push imdbID to array, and save to localStorage
 document.addEventListener('click', function(event){
     if (event.target.dataset.add){
         if(!moviesToWatchArr.includes(event.target.dataset.add)){
             moviesToWatchArr.push(event.target.dataset.add)
+            localStorage.setItem('moviesToWatchArr', JSON.stringify(moviesToWatchArr))
             console.log(moviesToWatchArr)
         } else {
             console.log('Already added!')
