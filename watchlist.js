@@ -1,17 +1,16 @@
 const moviesToWatchEl = document.getElementById('movies-to-watch')
-
 let moviesToWatchArr = JSON.parse(localStorage.getItem('moviesToWatchArr'))
 let movieDataArr = []
 let moviesToWatchHtml = ''
 
 //To use locally stored arr imdbIDs to asycnhronously call the OMDB API for data on each film added to the watchlist
 async function getMovieData(){
+    movieDataArr = []
     await Promise.all(moviesToWatchArr.map(async function(movie){
         const response = await fetch (`https://omdbapi.com/?apikey=ca546780&i=${movie}`)
         const data = await response.json()
         movieDataArr.push(data)
     }))
-    console.log(movieDataArr)
 }
 
 //To generate HTML from the watchlist data genereated by getMovieData()
@@ -46,7 +45,7 @@ function getMoviesToWatchHtml() {
 document.addEventListener('click', function(event){
     if (event.target.dataset.add){
         let deletedMovie = moviesToWatchArr.indexOf(event.target.dataset.add)
-        moviesToWatchArr.splice(deletedMovie)
+        moviesToWatchArr.splice(deletedMovie, 1)
         localStorage.setItem('moviesToWatchArr', JSON.stringify(moviesToWatchArr))
         render()
     }
