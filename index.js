@@ -63,7 +63,7 @@ async function getMovieDetails(){
     return movieDetailsData
 }
 
-//This function generates an html blocks for each movie object pushed by getMovieDetails() into the movieDetailsData array
+//This function generates an html block for each movie object pushed by getMovieDetails() into the movieDetailsData array
 function getSearchResultsHtml() {
     movieDetailsData.map(function(movie){
         searchResultsHtml += `
