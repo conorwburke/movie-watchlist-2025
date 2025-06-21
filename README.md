@@ -9,7 +9,7 @@ The app allows users to search for movies and relevant details such as title, IM
 
 ## Using the app
 
-This app has been deployed on Netlify and can be utilized at the following address: TBDXXX
+This app has been deployed on Netlify and can be utilized at the following address: https://dashing-malasada-1573c4.netlify.app/
 
 ## Features
 
