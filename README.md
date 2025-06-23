@@ -23,9 +23,9 @@ This app has been deployed on Netlify and can be utilized at the following addre
 -CSS
 -JavaScript
 
-## Reflection on project
+## Reflection on the Project
 
 I ran into two main challenges with the project, both related to the API call. The first was that the data returned from the base search text query did not contain complete data--
 the description in particular. As such, I had to call the API again using the IMDB id for the movie, which did provide complete data. The second issue was more fundamental:
 because I'd been taught how to make API calls using fetch and .then and was simultaneously trying to teach myself how to instead use asynchronous function calls, I had a bit of trouble
-understand how to force all promises to resolve before subsequent code ran.
+understand how to force all promises to resolve before subsequent code ran. Some ideas for other features I could add: a pop-up or some other kind of visual confirmation that the cat fact has in fact been saved after clicking on the Save this fact button, as well as a means of removing individual facts from the My Saved Facts list rather than the current option which only provides a single button to clear the entire list (by clearing Local Storage).
